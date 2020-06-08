@@ -1,5 +1,6 @@
 package com.example.retrofit.ui.main;
 
+import android.graphics.ColorSpace;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.retrofit.R;
 import com.example.retrofit.pojo.ModelPosts;
 
-public class PostAdapter extends ListAdapter<ModelPosts,PostAdapter.ContactViewHolder> {
-    static  DiffUtil.ItemCallback<ModelPosts> diffCallback=new DiffUtil.ItemCallback<ModelPosts>() {
+public class PostAdapter extends ListAdapter<ModelPosts, PostAdapter.ContactViewHolder> {
+    static DiffUtil.ItemCallback<ModelPosts> diffCallback = new DiffUtil.ItemCallback<ModelPosts>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull ModelPosts oldItem, @NonNull ModelPosts newItem) {
-            return oldItem.getId()==newItem.getId();
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
@@ -42,23 +43,25 @@ public class PostAdapter extends ListAdapter<ModelPosts,PostAdapter.ContactViewH
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
-        holder.onBind(getItem(position));
+       holder.onBind(getItem(position));
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
+        TextView id , title , body;
 
-        TextView texTittle, textId,textBody;
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
-            textId = itemView.findViewById(R.id.userid);
-            texTittle=itemView.findViewById(R.id.tittle);
-            textBody = itemView.findViewById(R.id.body);
+            id=itemView.findViewById(R.id.userid);
+            title=itemView.findViewById(R.id.tittle);
+            body=itemView.findViewById(R.id.body);
+
+        }
+        void onBind(ModelPosts posts){
+            id.setText(String.valueOf(posts.getUserId()));
+            title.setText(posts.getTitle());
+            body.setText(posts.getBody());
         }
 
-        void onBind(ModelPosts contact) {
-            textId.setText(String.valueOf(contact.getUserId()));
-            texTittle.setText(contact.getTitle());
-            textBody.setText(contact.getBody());
-        }
     }
 }
+
